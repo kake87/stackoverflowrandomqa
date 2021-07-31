@@ -1,0 +1,24 @@
+TAGS
+jsp forms combobox struts2 action
+QUESTION
+i have a combobox in a form and when i click submit i get this error. 
+HTTP ERROR: 404  No result defined for action MyAction  and result input
+in the action i tried to return INPUT instead of SUCCESS but still doesnt work.
+any ideas what can be wrong?
+thanks.
+....................................................................................................
+ANSWER
+            0
+You probably have one or more validation rules failing. This causes an implicit result of "input" to be invoked
+Share
+Improve this answer
+                Follow
+        answered Mar 26 '09 at 19:28
+krosenvoldkrosenvold
+71k2828 gold badges141141 silver badges205205 bronze badges
+1
+thanks. it was passing a String to the action and i thought that it would pass the object country. how can i retrieve the id of the object from the combobox?  this is what i have:  <s:combobox label="Country" name="country" headerValue="Select" headerKey="1" list="%{countries}" listValue="name"/>
+– pigouina
+Mar 26 '09 at 20:03
+Add a comment
+ | 
