@@ -1,26 +1,20 @@
 TAGS
-asp.net vb.net linq linq-to-sql anonymous-types
+java profiler
 QUESTION
-Caan somone advise the best approach to what i'm trying to acheive (linq to sql, returning list of data to show in a grid/list etc etc)... Its complaining about anonymous type conversion, and from what i'm reading, thats not elegant way of doing it.
-  Public Function GetHistory(ByVal historyId As Integer) As List(Of ?????????)
-    Using dc As New myDataContext(Application.GetConnection)
-      Return (From t In dc.ActionTypes, a In t.MyTable Where a.HistoryID = historyId Select a.ActionOn, a.ActionBy, t.Description, a.ImpactedItem, a.ActionDescription).ToList
-    End Using
-  End Function
+Occasionally I have to do some profiling work on Java code, and I would like to know why I should have my boss investigate in a commercial profiler as opposed to just use the one in Netbeans or JConsole?
+What would the killer features be that would warrant the investment?
 ....................................................................................................
 ANSWER
-            5
-The problem is that an anonymous type does not have a compile-time type that you can use as your return value for you function, so the ???? in your List(Of ????) is not something that can ever be known by the compiler.
-Since you are binding this to a UI element, your best bet is probably to make the return value an IEnumerable, or IList.  You should be able to bind your control to that (since binding uses reflection under the covers).
+            8
+                +150
+I have experience using both NetBeans profiler and JProbe. For performance profiling I have found Netbeans quite useful but where JProbe is superior is for memory profiling. 
+JProbe has superior tools for comparing heap snapshots and finding the root cause of a memory leak. For example, in JProbe you can view heap shapshots visually as a graph, select nodes to investigate and then delete references to see if the instance could then be garbage collected.
 Share
+Improve this answer
                 Follow
-        answered Mar 11 '09 at 9:58
-ckramerckramer
-9,30311 gold badge2121 silver badges3838 bronze badges
-1
-1
-Returning as a generic iList did the job..... Best practice, doubtful... Workable, certainly.
-– GordonB
-Mar 11 '09 at 10:19
+edited Mar 1 '09 at 23:00
+        answered Feb 25 '09 at 12:06
+MarkMark
+27.5k77 gold badges5555 silver badges8989 bronze badges
 Add a comment
  | 
