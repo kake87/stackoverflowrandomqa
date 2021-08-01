@@ -1,24 +1,26 @@
 TAGS
-jsp forms combobox struts2 action
+asp.net vb.net linq linq-to-sql anonymous-types
 QUESTION
-i have a combobox in a form and when i click submit i get this error. 
-HTTP ERROR: 404  No result defined for action MyAction  and result input
-in the action i tried to return INPUT instead of SUCCESS but still doesnt work.
-any ideas what can be wrong?
-thanks.
+Caan somone advise the best approach to what i'm trying to acheive (linq to sql, returning list of data to show in a grid/list etc etc)... Its complaining about anonymous type conversion, and from what i'm reading, thats not elegant way of doing it.
+  Public Function GetHistory(ByVal historyId As Integer) As List(Of ?????????)
+    Using dc As New myDataContext(Application.GetConnection)
+      Return (From t In dc.ActionTypes, a In t.MyTable Where a.HistoryID = historyId Select a.ActionOn, a.ActionBy, t.Description, a.ImpactedItem, a.ActionDescription).ToList
+    End Using
+  End Function
 ....................................................................................................
 ANSWER
-            0
-You probably have one or more validation rules failing. This causes an implicit result of "input" to be invoked
+            5
+The problem is that an anonymous type does not have a compile-time type that you can use as your return value for you function, so the ???? in your List(Of ????) is not something that can ever be known by the compiler.
+Since you are binding this to a UI element, your best bet is probably to make the return value an IEnumerable, or IList.  You should be able to bind your control to that (since binding uses reflection under the covers).
 Share
-Improve this answer
                 Follow
-        answered Mar 26 '09 at 19:28
-krosenvoldkrosenvold
-71k2828 gold badges141141 silver badges205205 bronze badges
+        answered Mar 11 '09 at 9:58
+ckramerckramer
+9,30311 gold badge2121 silver badges3838 bronze badges
 1
-thanks. it was passing a String to the action and i thought that it would pass the object country. how can i retrieve the id of the object from the combobox?  this is what i have:  <s:combobox label="Country" name="country" headerValue="Select" headerKey="1" list="%{countries}" listValue="name"/>
-– pigouina
-Mar 26 '09 at 20:03
+1
+Returning as a generic iList did the job..... Best practice, doubtful... Workable, certainly.
+– GordonB
+Mar 11 '09 at 10:19
 Add a comment
  | 
