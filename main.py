@@ -12,7 +12,7 @@ def soup_aggregator(url):
         question = bs_page.find(class_='s-prose js-post-body', attrs='text').text.strip()
         tags = bs_page.find(class_='post-taglist d-flex gs4 gsy fd-column', attrs='text').text
         answer = bs_page.find(class_='answer accepted-answer', attrs='text').text.strip('\n\n')
-        result = f'TAGS{tags}QUESTION\n{question}\n{100 * "."}\nANSWER{answer}'
+        result = f'TAGS:{tags}\nQUESTION:\n{question}\n\nANSWER{answer}\n{100 * "."}'
         return result
     except AttributeError:
         print(f'URL:{url} is not available\n'
@@ -39,7 +39,7 @@ def output_write(output_file):
         with open('output.txt', 'w', encoding='utf-8') as file:
             file.write(output_file)
     else:
-        print('Unwritebale')
+        print('Result unavailable')
         pass
 
 

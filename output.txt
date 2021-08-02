@@ -1,0 +1,65 @@
+TAGS:
+javascript jquery ajax dom prototypejs
+QUESTION:
+Is there a built in method or defacto default plugin that will let you automatically assign an unique ID to an element in jQuery, or do you need to implement something like this yourself? I'm looking for the jQuery equivalent to Prototype's identify method 
+Here's an example.  I have some HTML structure on a page that looks like this
+<span id="prefix_1">foo bar</span>
+...
+<div id="foo">
+   <span></span>
+   <span></span>
+   <span></span>
+</div>
+I want to assign each of the spans an ID that will be unique to the page.  So after calling something like this
+$('#foo span').identify('prefix');   //fake code, no such method
+The rendered DOM would look something like this
+<span id="prefix_1">foo bar</span>
+...
+<div id="foo">
+   <span id="prefix_2"></span>
+   <span id="prefix_3"></span>
+   <span id="prefix_4"></span>
+</div>
+Is there anything official-ish/robust for jQuery, or is this something most jQuery developers roll on their own?
+ANSWER
+            22
+jQuery.fn.identify = function(prefix) {
+    var i = 0;
+    return this.each(function() {
+        if(this.id) return;
+        do { 
+            i++;
+            var id = prefix + '_' + i;
+        } while($('#' + id).length > 0);            
+        $(this).attr('id', id);            
+    });
+};
+$('span').identify('test');
+Tested this on:
+<span id='test_2'></span>
+<span>test1</span>
+<span>test2</span>
+<span>test3</span>
+Turned it to:
+<span id="test_2"></span>
+<span id="test_1">test1</span>
+<span id="test_3">test2</span>
+<span id="test_4">test3</span>
+Share
+Improve this answer
+                Follow
+edited Jan 24 '14 at 20:52
+        answered Jan 22 '09 at 21:09
+Paolo BergantinoPaolo Bergantino
+453k7676 gold badges511511 silver badges432432 bronze badges
+2
+1
+The code works and is appreciated, but I'm still looking for something that's been around a while and proven itself in the wild (which is in no way a criticism on your provided code)
+– Alan Storm
+Jan 22 '09 at 21:27
+I poked around the jQuery website before writing this and I couldn't find anything, but I get it where you're coming from. I think I covered everything, though.
+– Paolo Bergantino
+Jan 22 '09 at 21:32
+Add a comment
+ | 
+....................................................................................................
